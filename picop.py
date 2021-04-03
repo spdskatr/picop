@@ -212,11 +212,15 @@ def picop_remove(args):
 @picop_cmd("list")
 def picop_list(args):
     store_dir = get_store_dir()
-    print("Stored passwords:")
+    names = []
     for entry in os.scandir(store_dir):
         if entry.is_file() and not entry.name.startswith("."):
-            print("- {}".format(entry.name))
+            names.append(entry.name)
 
+    names.sort()
+    print("Stored passwords:")
+    for name in names:
+        print("- {}".format(name))
 
 
 ########
