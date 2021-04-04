@@ -84,7 +84,7 @@ def get_salt():
     salt_path = get_salt_path()
     with open(salt_path, "rb") as f:
         res = f.read()
-    return res
+    return base64.urlsafe_b64decode(res)
 
 # Validates a picop key.
 def validate_key(key):
@@ -148,7 +148,7 @@ def picop_init(args):
     fernet = Fernet(key)
 
     with open(salt_path, "wb") as f:
-        f.write(new_salt)
+        f.write(base64.urlsafe_b64encode(new_salt))
     print("Salt successfully written to store.")
     with open(val_path, "wb") as f:
         f.write(fernet.encrypt(VAL_CONTENTS))
