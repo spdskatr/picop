@@ -9,6 +9,7 @@ import argparse
 from cryptography.fernet import Fernet, InvalidToken
 from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
 
+import cryptography.hazmat.backends.openssl.backend as openssl_backend
 
 ##########
 # CONFIG #
@@ -105,7 +106,7 @@ def validate_key(key):
 
 # Gets the key derivation function.
 def get_kdf(salt):
-    return Scrypt(salt=salt, length=32, n=2**14, r=8, p=1)
+    return Scrypt(salt=salt, length=32, n=2**14, r=8, p=1, backend=openssl_backend)
 
 # Gets the base64 picop key, which is a combination of the salt and the super password.
 def get_key():
